@@ -8,16 +8,66 @@
         .center-middle {
             width: 600px;
             height: 500px;
+            overflow: scroll;
         }
     </style>
-    <script src="js/juery-3.3.1-min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <script>
+        function insertKey(selection, key) {
+            if (selection.getRangeAt && selection.rangeCount) {
+                let range = selection.getRangeAt(0);
+                range.deleteContents();
+
+                let frag = document.createDocumentFragment();
+                let node, lastNode;
+                let eles = $(key);
+                /*eles.each(function (i, n) {
+                    lastNode = frag.appendChild(n);
+                });*/
+                for (var i = 0, len = eles.length; i < len; i++) {
+                    frag.appendChild(eles.get(i));
+                    lastNode = eles.get(i);
+                }
+                console.log(lastNode);
+                range.insertNode(frag);
+                if (lastNode) {
+                    range = range.cloneRange();
+                    range.setStartAfter(eles.get(eles.length - 1));
+                    range.collapse(true);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    $("#edit").focus();
+                }
+            }
+        }
+
+
+        $(function () {
+            $("#edit").bind("keydown", function (event) {
+                let key = event.keyCode || event.which;
+                let selection = window.getSelection();
+                console.log(selection);
+                console.log(key);
+                switch (key) {
+                case 13:
+                    insertKey(selection, "<br/><span style='visibility: hidden;'>行首</span>");
+                    event.stopPropagation();
+                    return false;
+                    break;
+                case 9:
+                    insertKey(selection, "<span style='visibility: hidden;'>行首</span>");
+                    event.stopPropagation();
+                    return false;
+                    break;
+                }
+            });
+        });
 
     </script>
 </head>
 <body>
 
-<div class="center-middle" contenteditable="true">超级大本营</div>
+<div id="edit" class="center-middle" contenteditable="true">超级大本营</div>
 
 </body>
 </html>
