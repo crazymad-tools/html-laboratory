@@ -1,0 +1,9 @@
+body {
+    padding: 0;
+}
+.center-middle {
+    position: fixed;
+    left: 0;
+    right: 0;
+    marin: auto auto;
+}
