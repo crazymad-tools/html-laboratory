@@ -5,5 +5,6 @@ body {
     position: fixed;
     left: 0;
     right: 0;
-    marin: auto auto;
+    margin: auto auto;
+    border: 1px solid gray;
 }

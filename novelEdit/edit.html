@@ -21,9 +21,6 @@
                 let frag = document.createDocumentFragment();
                 let node, lastNode;
                 let eles = $(key);
-                /*eles.each(function (i, n) {
-                    lastNode = frag.appendChild(n);
-                });*/
                 for (var i = 0, len = eles.length; i < len; i++) {
                     frag.appendChild(eles.get(i));
                     lastNode = eles.get(i);
@@ -32,15 +29,14 @@
                 range.insertNode(frag);
                 if (lastNode) {
                     range = range.cloneRange();
-                    range.setStartAfter(eles.get(eles.length - 1));
+                    range.setStartAfter();
                     range.collapse(true);
                     selection.removeAllRanges();
                     selection.addRange(range);
-                    $("#edit").focus();
+                    // $("#edit").focus();
                 }
             }
         }
-
 
         $(function () {
             $("#edit").bind("keydown", function (event) {
@@ -50,24 +46,23 @@
                 console.log(key);
                 switch (key) {
                 case 13:
-                    insertKey(selection, "<br/><span style='visibility: hidden;'>行首</span>");
+                    insertKey(selection, "<br/><span style='visibility: hidden;'>制表</span>");
                     event.stopPropagation();
                     return false;
                     break;
                 case 9:
-                    insertKey(selection, "<span style='visibility: hidden;'>行首</span>");
+                    insertKey(selection, "<span style='display: inline-block; width: 2rem;'></span>");
                     event.stopPropagation();
                     return false;
                     break;
                 }
             });
         });
-
     </script>
 </head>
 <body>
 
-<div id="edit" class="center-middle" contenteditable="true">超级大本营</div>
+<div id="edit" class="center-middle" contenteditable="true"></div>
 
 </body>
 </html>
