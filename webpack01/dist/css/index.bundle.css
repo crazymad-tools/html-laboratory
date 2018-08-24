@@ -1,7 +1,10 @@
+.node {
+  background: red; }
+
 .node span {
   color: blue;
   background: white;
   font-weight: bold; }
 
 
-/*# sourceMappingURL=test.css.map*/
+/*# sourceMappingURL=index.bundle.css.map*/

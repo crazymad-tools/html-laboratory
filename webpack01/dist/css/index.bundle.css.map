@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./entry/css/index.css","webpack:///./entry/css/test.scss"],"names":[],"mappings":"AAAA;AACA,kBAAkB;;ACDlB;AACA;AACA;AACA,oBAAoB","file":"../css/index.bundle.css","sourcesContent":[".node {\n  background: red; }\n",".node span {\n  color: blue;\n  background: white;\n  font-weight: bold; }\n"],"sourceRoot":""}

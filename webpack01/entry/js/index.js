@@ -1,5 +1,5 @@
-// import css from './css/index.css'
-// import css2 from './css/test.scss'
+import css from '../css/index.css'
+import css2 from '../css/test.scss'
 
 function hello() {
     var element = document.getElementsByClassName("test").item(0);
@@ -8,6 +8,6 @@ function hello() {
 }
 
 window.onload = function() {
-    alert("hello");
+    alert("hello 我是你爸爸");
     hello();
 }
