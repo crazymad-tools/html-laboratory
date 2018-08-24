@@ -1,1 +1,1 @@
-{"version":3,"sources":["webpack:///./src/css/index.css"],"names":[],"mappings":"AAAA;AACA;AACA,C","file":"./css/index.css","sourcesContent":[".node {\r\n  background: red;\r\n}"],"sourceRoot":""}
+{"version":3,"sources":["webpack:///./entry/css/index.css"],"names":[],"mappings":"AAAA;AACA,kBAAkB","file":"./css/index.css","sourcesContent":[".node {\n  background: red; }\n"],"sourceRoot":""}

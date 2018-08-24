@@ -1,9 +1,9 @@
-import css from '../src/css/index.css'
+// import css from './css/index.css'
+// import css2 from './css/test.scss'
 
 function hello() {
     var element = document.getElementsByClassName("test").item(0);
     element.setAttribute("class", element.getAttribute("class") + " node");
-    element.innerHTML = "test";
     alert("crazy_mad");
 }
 
