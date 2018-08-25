@@ -4,7 +4,8 @@
   "description": "webpack test ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "webpack-dev-server"
   },
   "author": "crazymad",
   "license": "ISC",
@@ -15,7 +16,8 @@
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-    "webpack": "^4.17.1"
+    "webpack": "^4.17.1",
+    "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
     "webpack-cli": "^3.1.0"

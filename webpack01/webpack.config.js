@@ -2,15 +2,16 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var path = require("path");
 
 module.exports = {
+    mode: "production",
     devtool: "source-map",
     entry: {
-        index: "./entry/js/index.js",
+        index: "./entry/index.js",
         test: "./entry/css/test.scss",
         // index: "./entry/css/index.css"
     },
     output: {
         filename: "[name].bundle.js",
-        path: path.resolve(__dirname + "/dist/js")
+        path: path.resolve(__dirname + "/dist")
     },
     module: {
         rules: [
@@ -26,8 +27,12 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "../css/[name].bundle.css",
+            filename: "./css/[name].bundle.css",
             chunkFileName: '[id].css'
         }),
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        port: 3300,
+    }
 }
