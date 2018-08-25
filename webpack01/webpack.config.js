@@ -5,13 +5,13 @@ module.exports = {
     mode: "production",
     devtool: "source-map",
     entry: {
-        index: "./entry/index.js",
-        test: "./entry/css/test.scss",
-        // index: "./entry/css/index.css"
+        index: "./src/js/index.js",
+        test: "./src/css/test.scss",
+        // index: "./src/css/index.css"
     },
     output: {
         filename: "[name].bundle.js",
-        path: path.resolve(__dirname + "/dist")
+        path: path.resolve(__dirname + "/dist/js")
     },
     module: {
         rules: [
@@ -27,7 +27,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "./css/[name].bundle.css",
+            filename: "../css/[name].bundle.css",
             chunkFileName: '[id].css'
         }),
     ],
