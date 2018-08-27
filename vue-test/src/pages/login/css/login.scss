@@ -1,0 +1,95 @@
+#box {
+  $font-color: #326a8b;
+
+  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  width: 400px;
+  margin: 100px auto;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #c9c9c9;
+  box-sizing: border-box;
+  padding: 30px 15px 30px 15px;
+
+  .jump-tip {
+    display: inline-block;
+    margin-top: 40px;
+    text-decoration: none;
+    color: #575757;
+    font-size: 12px;
+
+    &:active, &:hover {
+      color: $font-color;
+    }
+  }
+
+  #title {
+    font-weight: bold;
+    font-size: 40px;
+    font-family: KaiTi;
+    color: $font-color;
+  }
+
+  #description {
+    font-size: 16px;
+    font-family: KaiTi;
+    font-weight: bold;
+    color: $font-color;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .input-container {
+    padding-top: 30px;
+  }
+
+  @mixin button-input {
+    padding: 6px;
+    font-size: 15px;
+    height: 32px;
+    width: 70%;
+    margin-bottom: 10px;
+    outline: none;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  /* 登录框的输入框样式 */
+  .login-input {
+    $border-color: #cfcfcf;
+    $white-border: 1px solid white;
+
+    @include button-input;
+    border-left: $white-border;
+    border-right: $white-border;
+    border-top: $white-border;
+    border-bottom: 1px solid $border-color;
+
+    &:focus {
+      border-left: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+      border-top: 1px solid $border-color;
+      box-shadow: inset 0 0 5px $border-color;
+      //border-radius: 5px;
+    }
+    &::-ms-input-placeholder, &::-webkit-input-placeholder {
+      text-align: center;
+    }
+  }
+
+  .login-submit {
+    @include button-input;
+    margin-top: 10px;
+    background: #1c81be;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:active {
+      box-shadow: 0 0 3px gray;
+    }
+  }
+}

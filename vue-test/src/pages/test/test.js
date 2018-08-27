@@ -18,5 +18,5 @@ new Vue({
 
 window.onload = function () {
   console.log('hello world')
-  alert('hello world')
+  // alert('hello world')
 }
