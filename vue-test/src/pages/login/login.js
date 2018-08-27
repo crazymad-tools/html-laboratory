@@ -4,16 +4,23 @@ import Vue from 'vue'
 import Box from './vue/Box'
 import router from './router/main'
 
+import 'jquery'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+var app = new Vue({
   el: '#box',
   router,
   components: { Box },
-  template: '<Box/>'
+  template: '<Box/>',
+  data: {
+    test: 'hello'
+  }
 })
 
 window.onload = function () {
-  console.log('hello world')
+  console.log(app.loginAccount);
+  console.log(app.test)
+  app.test = 'crazymad'
 }

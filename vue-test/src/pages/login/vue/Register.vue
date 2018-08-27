@@ -14,7 +14,15 @@
 
 <script>
 export default {
-  name: 'Register'
+  name: 'Register',
+  data: () => {
+    return {
+      registerAccount: '',
+      registerPassword: '',
+      registerPasswordRepeat: '',
+      registerCode: ''
+    }
+  }
 }
 </script>
 
