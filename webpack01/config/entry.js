@@ -1,9 +1,17 @@
 var path = require("path");
 var fs = require("fs");
 
-var files = [];
+var entryFiles = [];
+
+function loadDir(filedir) {
+    console.log("fileDir: " + filedir);
+    var files = fs.readdirSync(filedir);
+    for (var i = 0, len = files.length; i < len; i++) {
+        console.log(files[i]);
+    }
+}
 
 module.exports =((filedir)=> {
-    console.log("filedir: " + filedir);
-
+    loadDir(filedir);
+    return entryFiles;
 });

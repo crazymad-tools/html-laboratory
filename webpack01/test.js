@@ -1,4 +1,5 @@
+var path = require("path");
 var dd = require("./config/entry.js");
 
-dd(__dirname);
+console.log(dd(path.resolve(__dirname, "src")));
 
