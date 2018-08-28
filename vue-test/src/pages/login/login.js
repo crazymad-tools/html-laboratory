@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Box from './vue/Box'
+import Dialog from './vue/Dialog'
 import router from './router/main'
 
 import 'jquery'
@@ -12,7 +13,7 @@ Vue.config.productionTip = false
 var app = new Vue({
   el: '#box',
   router,
-  components: { Box },
+  components: { Box, Dialog },
   template: '<Box/>',
   data: {
     test: 'hello'
@@ -20,7 +21,7 @@ var app = new Vue({
 })
 
 window.onload = function () {
-  console.log(app.loginAccount);
+  console.log(app.loginAccount)
   console.log(app.test)
   app.test = 'crazymad'
 }
