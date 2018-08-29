@@ -1,6 +1,6 @@
 <template>
   <div class="input-container">
-    <input id="login-account" v-model="loginAccount" class="login-input" type="text" placeholder="请输入邮箱"/><br/>
+    <input id="login-account" v-model="loginAccount" class="login-input" type="text" placeholder="请输入手机号"/><br/>
     <input id="login-password" v-model="loginPassword" class="login-input" type="password" placeholder="请输入密码"/><br/>
     <div>
       <input id="login-code" v-model="loginCode" class="login-input" type="text" placeholder="请输入验证码"/><br/>
