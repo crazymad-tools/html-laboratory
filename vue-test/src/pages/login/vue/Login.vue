@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {cmAjax} from '../js/ajax'
+// import {cmAjax} from '../js/ajax'
 export default {
   name: 'Login',
   data: function () {
@@ -26,8 +26,8 @@ export default {
   methods: {
     submitLogin: function (username, password, code) {
       // ajax(username, password)
-      console.log('卧槽，到底输不输出')
-      this.$emit('showtip', '登录成功，正在跳转中。。。')
+      // console.log('卧槽，到底输不输出')
+      this.$emit('tips', '登录成功，正在跳转中。。。')
       // var parent = this.$emit
       /*
       cmAjax.commit({

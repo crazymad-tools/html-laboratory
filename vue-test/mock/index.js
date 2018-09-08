@@ -21,6 +21,22 @@ const proxy = {
       body.message = 'password error'
     }
     return res.status(200).json(body)
+  },
+  'POST /api/account/register/getPhoneCode': (req, res) => {
+    let phone = req.param.phone
+    if (phone === '13858251304') {
+      return res.status(200).json({
+        state: 1,
+        message: 'ok',
+        data: null
+      })
+    } else {
+      return res.status(200).json({
+        state: 0,
+        message: 'error',
+        data: null
+      })
+    }
   }
 }
 

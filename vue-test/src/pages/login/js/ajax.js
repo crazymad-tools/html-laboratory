@@ -3,7 +3,7 @@ import $ from 'jquery'
 var cmAjax = {
   submitLogin: (username, password) => {
     $.ajax({
-      url: '/login/success',
+      url: '/api/login/submit',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({
