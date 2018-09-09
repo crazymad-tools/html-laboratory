@@ -13,7 +13,8 @@
 </template>
 
 <script>
-// import {cmAjax} from '../js/ajax'
+import {cmAjax} from '@/js/ajax.js'
+import {apiUrlContainer} from '@/js/apiUrlContainer.js'
 export default {
   name: 'Login',
   data: function () {
@@ -24,35 +25,45 @@ export default {
     }
   },
   methods: {
-    submitLogin: function (username, password, code) {
-      // ajax(username, password)
-      // console.log('卧槽，到底输不输出')
-      this.$emit('tips', '登录成功，正在跳转中。。。')
-      // var parent = this.$emit
-      /*
-      cmAjax.commit({
-        url: '/login/success',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-          username: username,
-          password: password,
-          code: code
-        }),
-        success: function (res) {
-          console.log(res)
-          if (res.state === 1) {
-            parent('showtip', '登录成功')
-          } else if (res.state === 2) {
-            parent('showtip', '用户不存在')
-          } else if (res.state === 3) {
-            parent('showtip', '密码错误')
-          } else if (res.state === 4) {
-            parent('showtip', '验证码错误')
-          }
+    formCheck: function () {
+      if (this.loginAccount === '') {
+        this.$emit('tips', '请输入手机号', 'shake')
+        return false
+      } else if (this.loginAccount.match(/^[1][3-9][0-9]{9}$/g) === null) {
+        this.$emit('tips', '请输入正确的手机号', 'shake')
+        return false
+      } else if (this.loginPassword === '') {
+        this.$emit('tips', '请输入密码', 'shake')
+        return false
+      } else if (this.loginCode === '') {
+        this.$emit('tips', '请输入验证码', 'shake')
+        return false
+      }
+    },
+    submitLogin: function () {
+      if (this.formCheck() === false) {
+        return null
+      }
+      var parent = this
+      var data = {
+        username: this.loginAccount,
+        password: this.loginPassword,
+        code: this.loginCode
+      }
+      cmAjax.postJson(apiUrlContainer.login, data, function (res) {
+        console.log(res)
+        if (res.state === 1) {
+          parent.$emit('tips', '登录成功，跳转中...', 3000)
+        } else if (res.state === 0) {
+          parent.$emit('tips', '账号或密码错误', 'shake')
+        } else if (res.state === 2) {
+          parent.$emit('tips', '用户不存在', 'shake')
+        } else if (res.state === 3) {
+          parent.$emit('tips', '密码错误', 'shake')
+        } else if (res.state === 4) {
+          parent.$emit('tips', '验证码错误', 'shake')
         }
       })
-      */
     }
   }
 }

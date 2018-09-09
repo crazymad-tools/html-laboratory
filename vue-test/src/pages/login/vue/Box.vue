@@ -13,18 +13,10 @@ export default {
   name: 'Box',
   components: {Dialog},
   methods: {
-    tips: function (message) {
+    tips: function (message, type = 'normal', overtime = 1000) {
       console.log(message)
       console.log(this.$refs.dialogTip.isShow)
-      /*
-      var obj = this.$refs.dialogTip
-      obj.isShow = true
-      obj.message = '密码错误'
-      setTimeout(function () {
-        obj.isShow = false
-      }, 1000)
-      */
-      this.$refs.dialogTip.show(1000, '登录失败，密码错误...', 'shake')
+      this.$refs.dialogTip.show(overtime, message, type)
     }
   },
   component: {

@@ -4,9 +4,9 @@
     <input id="register-password" v-model="registerPassword" class="login-input" type="password" placeholder="请输入密码"/><br/>
     <div style="position: relative;">
       <input id="register-code" v-model="registerCode" class="login-input" type="text" placeholder="获取手机验证码"/>
-      <span v-bind:class="{'tip-gray': tipGray, 'tip-normal': !tipGray}" id="code-tip" v-text="codeTip" @click="countDown()"></span>
+      <span v-bind:class="{'tip-gray': tipGray, 'tip-normal': !tipGray}" id="code-tip" v-text="codeTip" @click="sendMessage()"></span>
     </div>
-    <input id="register-submit" class="login-submit" type="submit" value="注册"/><br/>
+    <input id="register-submit" class="login-submit" @click="submitRegister" type="submit" value="注册"/><br/>
     <router-link to="/" class="jump-tip">已经有账号啦，那就赶紧登录呗~</router-link>
   </div>
 </template>
@@ -28,18 +28,48 @@ export default {
     }
   },
   methods: {
-    countDown: function () {
+    submitRegister: function () {
+      console.log('submit register')
+      if (this.registerAccount === '') {
+        this.$emit('tips', '请输入手机号', 'shake')
+      } else if (this.registerPassword === '') {
+        this.$emit('tips', '请输入密码', 'shake')
+      } else if (this.registerCode === '') {
+        this.$emit('tips', '请输入短信验证码', 'shake')
+      }
+      var obj = this
+      var data = {
+        account: this.registerAccount,
+        password: this.registerPassword,
+        code: this.registerCode
+      }
+      cmAjax.postJson(apiUrlContainer.register, data, function (res) {
+        if (res.state === 1) {
+          obj.$emit('tips', '注册成功，正在跳转...')
+        } else if (res.state === 0) {
+          obj.$emit('tips', '注册失败，请稍后重试...', 'shake')
+        } else {
+          console.log('非法操作，注册失败')
+        }
+      })
+    },
+    sendMessage: function () {
       if (this.canSendCode === false) {
         return null
       }
-      cmAjax.urlencoded(apiUrlContainer.registerPhoneCode, {phone: this.registerAccount}, function (res) {
-        // alert('发送成功，请注意查收')
-        console.log(res)
+      var obj = this
+      cmAjax.post(apiUrlContainer.registerPhoneCode, {phone: this.registerAccount}, function (res) {
+        if (res.state === 1) {
+          console.log('message send success')
+          obj.countdown()
+        } else if (res.state === 2) {
+          console.log('')
+        }
       })
-
+    },
+    countdown: function () {
       var obj = this
       var second = 60
-      // document.getElementById('code-tip').style.color = 'gray'
       obj.tipGray = true
       obj.codeTip = second + '秒后重新发送'
       obj.canSendCode = false
@@ -51,7 +81,6 @@ export default {
           obj.codeTip = '获取手机验证码'
           obj.canSendCode = true
           obj.tipGray = false
-          // document.getElementById('code-tip').style.color = '#348fc9'
         }
       }, 1000)
     }
@@ -67,6 +96,9 @@ export default {
   }
   .tip-normal {
     color: #348fc9;
+    &:hover {
+      color: rgba(59, 147, 232, 0.75);
+    }
   }
   #register-code {
     padding-right: 130px !important;
@@ -77,8 +109,5 @@ export default {
     font-size: 13px;
     cursor: pointer;
     top: 8px;
-    &:hover {
-      color: rgba(59, 147, 232, 0.75);
-    }
   }
 </style>

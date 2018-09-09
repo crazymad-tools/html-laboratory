@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(function () {
+            $.post('http://crazymad.top:8082/account/register/getPhoneCode', {phone: '13858251304'}, function (res) {
+                console.log(res);
+            })
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

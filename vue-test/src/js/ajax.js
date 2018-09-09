@@ -22,11 +22,12 @@ var cmAjax = {
       success(res)
     })
   },
-  urlencoded: (url, data, success) => {
+  postJson: (url, data, success) => {
     $.ajax({
       url: url,
       type: 'POST',
-      data: data,
+      contentType: 'application/json; charset=UTF-8',
+      data: JSON.stringify(data),
       success: function (res) {
         success(res)
       }

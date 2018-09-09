@@ -77,11 +77,11 @@ export default {
     }
 
     .dialog-shake {
-      -webkit-animation: shakeDialog 0.3s;
+      -webkit-animation: shakeDialog 0.2s;
     }
 
     .dialog-normal {
-      -webkit-animation: normalDialog 0.3s;
+      -webkit-animation: normalDialog 0.2s;
     }
 
     @keyframes normalDialog {
@@ -104,10 +104,10 @@ export default {
         -webkit-transform: translateX(0);
       }
       12.5%, 62.5% {
-        -webkit-transform: translateX(-2px);
+        -webkit-transform: translateX(-1px);
       }
       37.5%, 87.5% {
-        -webkit-transform: translateX(2px);
+        -webkit-transform: translateX(1px);
       }
     }
   }
