@@ -1,5 +1,5 @@
-// var prefix = 'http://127.0.0.1:8082'
-var prefix = ''
+var prefix = 'http://127.0.0.1:8082'
+// var prefix = ''
 
 var apiUrlContainer = {
   // 注册用的手机短信验证吗申请接口

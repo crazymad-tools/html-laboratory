@@ -1,19 +1,21 @@
 <template>
   <div class="input-container">
     <input id="register-account" v-model="registerAccount" class="login-input" type="text" placeholder="请输入手机号"/><br/>
-    <input id="register-password" v-model="registerPassword" class="login-input" type="password" placeholder="请输入密码"/><br/>
-    <div style="position: relative;">
-      <input id="register-code" v-model="registerPhoneCode" class="login-input" type="text" placeholder="获取手机验证码"/>
-      <span v-bind:class="{'tip-gray': tipGray, 'tip-normal': !tipGray}" id="code-tip" v-text="codeTip" @click="sendMessage()"></span>
-    </div>
-    <div id="phoneImageCode">
-      <div style="margin: auto auto; width: 70%; height: 60px;">
+    <div id="phoneImageCode" v-show="needPhoneImageCode">
+      <div style="margin: auto auto; background: #f4f4f4;">
         <span>请点击图片中的倒立文字&emsp;<img class="cur-pointer" @click="refreshImageCode"  src="@/images/refresh.png" width="13px" height="13px"/></span>
         <div id="imageCodeContainer">
           <img @click="getMousePosition" v-bind:src="imageCodePath" width="200px" height="50px"/>
+          <!--<canvas @click="getMousePosition" id="codeClickCanvas" width="200px" height="50px"></canvas>-->
         </div>
       </div>
     </div>
+    <div style="position: relative;">
+      <div style="clear: both;"></div>
+      <input id="register-code" v-model="registerPhoneCode" class="login-input" type="text" placeholder="获取手机验证码"/>
+      <span v-bind:class="{'tip-gray': tipGray, 'tip-normal': !tipGray}" id="code-tip" v-text="codeTip" @click="sendMessage()"></span>
+    </div>
+    <input id="register-password" v-model="registerPassword" class="login-input" type="password" placeholder="请输入密码"/><br/>
     <input id="register-submit" class="login-submit" @click="submitRegister" type="submit" value="注册"/><br/>
     <router-link to="/" class="jump-tip">已经有账号啦，那就赶紧登录呗~</router-link>
   </div>
@@ -27,14 +29,15 @@ export default {
   name: 'Register',
   data: () => {
     return {
-      imageCodePath: apiUrlContainer.registerPphoneImageCode + '?d=123',
+      imageCodePath: '',
       registerAccount: '',
       registerPassword: '',
       registerPhoneCode: '',
       registerImageCode: [],
       codeTip: '获取手机验证码',
       canSendCode: true,
-      tipGray: false
+      tipGray: false,
+      needPhoneImageCode: false
     }
   },
   created: () => {
@@ -43,9 +46,9 @@ export default {
   methods: {
     // 获取鼠标位置
     getMousePosition: function (event) {
-      var e = event || window.event
-      console.log('x:' + e.screenX + ' y:' + e.screenY)
-      console.log('domX:' + this.$el.offsetLeft + ' domY:' + this.$el.offsetTop)
+      console.log(this.$el.offsetParent)
+      console.log('left:' + this.$el.offsetLeft + ' top:' + this.$el.offsetTop)
+      console.log('clientX:' + event.clientX+ ' clientY:' + event.clientY)
     },
     // 刷新图片验证码
     refreshImageCode: function () {
@@ -75,7 +78,7 @@ export default {
       var data = {
         account: this.registerAccount,
         password: this.registerPassword,
-        code: this.registerCode
+        code: this.registerPhoneCode
       }
       cmAjax.postJson(apiUrlContainer.register, data, function (res) {
         if (res.state === 1) {
@@ -109,6 +112,12 @@ export default {
           console.log('message send success')
           obj.countdown()
           obj.$emit('tips', '短信验证码发送成功，请注意查收', 'normal', 2000)
+        } else if (res.state === 4) {
+          obj.$emit('tips', '手机号已存在，请直接登录', 'shake')
+        } else if (res.state === 2) {
+          obj.$emit('tips', '请点击图片中的倒立文字', 'shake')
+          obj.refreshImageCode()
+          obj.needPhoneImageCode = true
         } else {
           console.log('message send failure')
           obj.$emit('tips', '短信验证码发送失败，请稍后重试...', 'shake')
@@ -141,18 +150,30 @@ export default {
   @import "../css/login.scss";
 
   #phoneImageCode {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding: 1% 15%;
     span {
       color: gray;
       font-size: 13px;
     }
     #imageCodeContainer {
       text-align: center;
-      position: relative;
       margin-top: 10px;
       img {
         margin: auto auto;
         display: block;
+      }
+      #codeClickCanvas {
+        margin: auto auto;
+        position: absolute;
+        box-sizing: border-box;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border: 0;
+        opacity: 0;
       }
     }
   }
