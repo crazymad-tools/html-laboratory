@@ -34,7 +34,7 @@ const proxy = {
   },
   'POST /api/account/register/getPhoneCode': (req, res) => {
     let phone = req.body.phone
-    console.log(req.body)
+    // return res.json(body.resBody(0, 'failure', null))
     return res.json(body.resBody())
   },
   'POST /api/account/register/submit': (req, res) => {

@@ -3,8 +3,16 @@
     <input id="register-account" v-model="registerAccount" class="login-input" type="text" placeholder="请输入手机号"/><br/>
     <input id="register-password" v-model="registerPassword" class="login-input" type="password" placeholder="请输入密码"/><br/>
     <div style="position: relative;">
-      <input id="register-code" v-model="registerCode" class="login-input" type="text" placeholder="获取手机验证码"/>
+      <input id="register-code" v-model="registerPhoneCode" class="login-input" type="text" placeholder="获取手机验证码"/>
       <span v-bind:class="{'tip-gray': tipGray, 'tip-normal': !tipGray}" id="code-tip" v-text="codeTip" @click="sendMessage()"></span>
+    </div>
+    <div id="phoneImageCode">
+      <div style="margin: auto auto; width: 70%; height: 60px;">
+        <span>请点击图片中的倒立文字&emsp;<img class="cur-pointer" @click="refreshImageCode"  src="@/images/refresh.png" width="13px" height="13px"/></span>
+        <div id="imageCodeContainer">
+          <img @click="getMousePosition" v-bind:src="imageCodePath" width="200px" height="50px"/>
+        </div>
+      </div>
     </div>
     <input id="register-submit" class="login-submit" @click="submitRegister" type="submit" value="注册"/><br/>
     <router-link to="/" class="jump-tip">已经有账号啦，那就赶紧登录呗~</router-link>
@@ -19,24 +27,50 @@ export default {
   name: 'Register',
   data: () => {
     return {
+      imageCodePath: apiUrlContainer.registerPphoneImageCode + '?d=123',
       registerAccount: '',
       registerPassword: '',
-      registerCode: '',
+      registerPhoneCode: '',
+      registerImageCode: [],
       codeTip: '获取手机验证码',
       canSendCode: true,
       tipGray: false
     }
   },
+  created: () => {
+    document.title = 'CM小说-注册'
+  },
   methods: {
-    submitRegister: function () {
-      console.log('submit register')
+    // 获取鼠标位置
+    getMousePosition: function (event) {
+      var e = event || window.event
+      console.log('x:' + e.screenX + ' y:' + e.screenY)
+      console.log('domX:' + this.$el.offsetLeft + ' domY:' + this.$el.offsetTop)
+    },
+    // 刷新图片验证码
+    refreshImageCode: function () {
+      this.imageCodePath = apiUrlContainer.registerPphoneImageCode + '?d=' + Math.random()
+    },
+    // 检查表单内容是否合格
+    formCheck: function () {
       if (this.registerAccount === '') {
         this.$emit('tips', '请输入手机号', 'shake')
+        return false
       } else if (this.registerPassword === '') {
         this.$emit('tips', '请输入密码', 'shake')
-      } else if (this.registerCode === '') {
+        return false
+      } else if (this.registerPhoneCode === '') {
         this.$emit('tips', '请输入短信验证码', 'shake')
+        return false
       }
+      return true
+    },
+    // 提交注册信息
+    submitRegister: function () {
+      if (this.formCheck() === false) {
+        return null
+      }
+      console.log('submit register')
       var obj = this
       var data = {
         account: this.registerAccount,
@@ -53,20 +87,35 @@ export default {
         }
       })
     },
+    // 发送短信验证码
     sendMessage: function () {
+      // 判断是否可以发送短信
       if (this.canSendCode === false) {
         return null
+      } else if (this.registerAccount === '') {
+        this.$emit('tips', '请输入手机号', 'shake')
+        return null
+      } else if (this.registerAccount.match(/^[1][3-9][0-9]{9}$/g) === null) {
+        this.$emit('tips', '请输入正确的手机号', 'shake')
+        return null
+      } else if (this.registerImageCode === []) {
+        this.$emit('tips', '请输入图片验证码', 'shake')
+        return null
       }
+      // 向后端服务器发送请求
       var obj = this
       cmAjax.post(apiUrlContainer.registerPhoneCode, {phone: this.registerAccount}, function (res) {
         if (res.state === 1) {
           console.log('message send success')
           obj.countdown()
-        } else if (res.state === 2) {
-          console.log('')
+          obj.$emit('tips', '短信验证码发送成功，请注意查收', 'normal', 2000)
+        } else {
+          console.log('message send failure')
+          obj.$emit('tips', '短信验证码发送失败，请稍后重试...', 'shake')
         }
       })
     },
+    // 重新发送验证码倒计时
     countdown: function () {
       var obj = this
       var second = 60
@@ -91,6 +140,22 @@ export default {
 <style lang="scss">
   @import "../css/login.scss";
 
+  #phoneImageCode {
+    margin-bottom: 20px;
+    span {
+      color: gray;
+      font-size: 13px;
+    }
+    #imageCodeContainer {
+      text-align: center;
+      position: relative;
+      margin-top: 10px;
+      img {
+        margin: auto auto;
+        display: block;
+      }
+    }
+  }
   .tip-gray {
     color: gray;
   }

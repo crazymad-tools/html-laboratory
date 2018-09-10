@@ -24,6 +24,9 @@ export default {
       loginCode: ''
     }
   },
+  created: () => {
+    document.title = 'CM小说-登录'
+  },
   methods: {
     formCheck: function () {
       if (this.loginAccount === '') {
@@ -39,6 +42,7 @@ export default {
         this.$emit('tips', '请输入验证码', 'shake')
         return false
       }
+      return true
     },
     submitLogin: function () {
       if (this.formCheck() === false) {
