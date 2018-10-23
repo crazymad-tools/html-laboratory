@@ -1,16 +1,18 @@
 const ObjectType = require('../model/object_type')
+const mongoose = require('mongoose')
 
 class ObjectTypeDao {
 
-  async save (id, name) {
+  async save (name) {
     let objectType = new ObjectType({
-      id: id,
       name: name,
       createDate: new Date(),
       updateDate: new Date()
     })
-    
-    return await new Promise(function (resolve, reject) {
+    console.log(objectType)
+
+    let res =  await new Promise(function (resolve, reject) {
+      console.log('进入Promise')
       objectType.save(function (err, res) {
         console.log(err)
         console.log(res)
@@ -20,7 +22,9 @@ class ObjectTypeDao {
           resolve(res)
         }
       })
-    }) 
+    })
+
+    return res
   }
 
 }
