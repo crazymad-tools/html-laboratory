@@ -48,7 +48,7 @@ export default {
     getMousePosition: function (event) {
       console.log(this.$el.offsetParent)
       console.log('left:' + this.$el.offsetLeft + ' top:' + this.$el.offsetTop)
-      console.log('clientX:' + event.clientX+ ' clientY:' + event.clientY)
+      console.log('clientX:' + event.clientX + ' clientY:' + event.clientY)
     },
     // 刷新图片验证码
     refreshImageCode: function () {

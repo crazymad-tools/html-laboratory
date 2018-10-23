@@ -4,10 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>vue-test</title>
+  <script>
+    function getPos() {
+      let e = event || window.event
+      let scrollX = document.documentElement.scrollLeft
+      let scrollY = document.documentElement.scrollTop
+      let cursorX = e.clientX + scrollX
+      let cursorY = e.clientY + scrollY
+      // console.log('cursorX:' + cursorX + ' clientY:' + cursorY)
+      console.log('cursorX:' + e.clientX + ' clientY:' + e.clientY)
+      // let el = this.$el
+      // let elementX = el.getBoundingClientRect().left
+      // let elementY = el.getBoundingClientRect().top
+      // console.log('elementX:' + elementX + ' elementY:' + elementY)
+    }
+  </script>
 </head>
-<body>
-<h1>test</h1>
-<span style="background: gray; color: white; padding: 3px 5px;">龙腾网</span>
+<body onclick="getPos()">
 <div id="app"></div>
 <!-- built files will be auto injected -->
 </body>
